@@ -1,0 +1,26 @@
+export interface Room {
+    amenities
+: 
+String
+checkinTime
+: 
+String
+checkoutTime
+: 
+String
+photos
+: 
+String
+price
+: 
+number
+rating
+: 
+Number
+roomNumber
+: 
+String
+roomType
+: 
+String
+}

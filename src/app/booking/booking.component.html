@@ -1,0 +1,152 @@
+<p>{{bookingForm.value|json}}</p>
+<!-- roomId: [''],
+        guestEmail: [''],
+        checkinDate: [''],
+        checkoutDate: [''],
+        bookingStatus: [''],
+        bookingAmount: [''],
+        bookingDate: [''],
+        mobileNumber: [''],
+        guestName: [''],
+        guestAddress: [''],
+        guestCity:  [''],
+        guestState: [''],
+        guestCountry: [''],
+        guestZipCode: [''],
+        guestCount: [''], --> 
+        <div>
+          <button type="button" (click)="addPassport()">Add Passport</button>
+        </div>
+        <div>
+          <button type="button" (click)="deletePassport()">Delete Passport</button>
+        </div>
+
+<form [formGroup]="bookingForm" (ngSubmit)="addBooking()">
+  <mat-form-field *ngIf="bookingForm.get('passport')">
+    <input matInput type="text" formControlName="passport" placeholder="Passport" />
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" formControlName="roomId" placeholder="Room Id" />
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="email" formControlName="guestEmail" placeholder="Guest Email" />
+  </mat-form-field>
+  <div *ngIf="bookingForm.get('guestEmail')?.hasError('email')">
+    {{bookingForm.get('guestEmail')?.errors | json}}
+  </div>
+  <mat-form-field>
+    <input matInput type="text" formControlName="guestName" placeholder="Guest Name" />
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" formControlName="mobileNumber" placeholder="Mobile Number" />
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number" formControlName="bookingAmount" placeholder="Booking Amount" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Check-in Date</mat-label>
+    <input matInput [matDatepicker]="checkin" formControlName="checkinDate">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="checkin"></mat-datepicker-toggle>
+    <mat-datepicker #checkin></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Check-out Date</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="checkoutDate">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Check-in Date</mat-label>
+    <input matInput [matDatepicker]="bookingDate" formControlName="bookingDate">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="bookingDate"></mat-datepicker-toggle>
+    <mat-datepicker #bookingDate></mat-datepicker>
+  </mat-form-field>
+  <div>{{bookingForm.get('checkoutDate')?.errors|json}}</div>
+  <div formGroupName="adress">
+  <mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Adress Information
+      </mat-panel-title>
+      <mat-panel-description>
+        Type your adress here
+        <mat-icon>account_circle</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field>
+      <mat-label>First name</mat-label>
+      <input matInput formControlName="guestAddress">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Age</mat-label>
+      <input matInput formControlName="guestCity" type="number" min="1">
+    </mat-form-field>
+    <div>{{bookingForm.get('adress.guestAddress')?.errors|json}}</div>
+    <mat-form-field>
+      <mat-label>Age</mat-label>
+      <input matInput formControlName="guestState" type="number" min="1">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Age</mat-label>
+      <input matInput formControlName="guestCountry" type="number" min="1">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Age</mat-label>
+      <input matInput formControlName="guestZipCode" type="number" min="1">
+    </mat-form-field>
+  
+  </mat-expansion-panel>
+
+</mat-accordion>
+  </div>
+<div>
+  <button type="button" (click)="addGuest()">Add Guest</button>
+</div>
+<mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Guest Information
+      </mat-panel-title>
+      <mat-panel-description>
+        Type your guests here
+        <mat-icon>account_circle</mat-icon>
+        
+      </mat-panel-description>
+      
+    </mat-expansion-panel-header>
+    <div formArrayName="guests">
+      <div *ngFor="let guest of guests.controls;let i = index">
+        <div [formGroupName]="i">
+          <h3>Guest {{i+1}}</h3>
+          <mat-form-field>
+            <input type="text" matInput formControlName="guestName"/>
+          </mat-form-field>
+          <!-- <div *ngIf="bookingForm.get(['guests',i,'guestName'])?.hasError()"> -->
+            {{bookingForm.get(['guests',i,'guestName'])?.errors | json}}
+          <!-- </div> -->
+          <mat-form-field>
+            <input type="text" matInput formControlName="guestEmail"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input type="text" matInput formControlName="mobileNumber"/>
+          </mat-form-field>
+          <div>
+            <button type="button" (click)="deleteGuest(i)">Add Guest</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+</mat-accordion>
+
+
+  <button [disabled]="bookingForm.invalid" type="submit" mat-raised-button color="primary">Book Room</button>
+</form>

@@ -1,0 +1,30 @@
+{{getError$|async}}
+Number of Rooms: {{roomCount$|async}}
+{{formFilter|json}}
+<div>
+    <input type="number" [formControl]="formFilter">
+</div>
+<!-- <app-header>
+    <app-room-list [roomsToUse]="rooms"  >
+    </app-room-list>
+    <h3 #merhaba>hi</h3>
+</app-header>
+<app-header></app-header>
+<app-header></app-header> -->
+
+<div><div>Sepet</div>
+<button (click)="addRoom()">Add New Room</button>
+<button (click)="editRoom()">Edit Room</button>
+<button (click)="deleteRoom()">Delete Room</button>
+<app-room-list *ngIf="roomSubscription$|async as room" [roomsToUse]="room" [price] ="formFilter.value?formFilter.value:1110" >
+</app-room-list>
+
+<button (click)="deleteRoomList()">Delete</button>
+<div>
+    <ng-template #noRooms></ng-template>
+        
+</div>
+<div #name></div>
+<div>{{totalBytes}}</div>
+
+<router-outlet></router-outlet>
